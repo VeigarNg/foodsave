@@ -1,17 +1,23 @@
 import { useState, useEffect } from 'react'
 import { StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { router } from 'expo-router'
-
 import { supabase } from '@/lib/supabase'
 import { ThemedText } from '@/components/themed-text'
 import { ThemedView } from '@/components/themed-view'
 import { useSession } from '@/lib/useSession'
+import { CheckboxGroup } from '@/components/ui/checkbox-group'
+
+const DIETARY_OPTIONS = ['None', 'Halal', 'Kosher', 'Pescatarian', 'Vegetarian', 'Vegan']
+const ALLERGEN_OPTIONS = ['None', 'Dairy', 'Egg', 'Peanut', 'Tree nut', 'Soy', 'Wheat', 'Gluten', 'Shellfish', 'Fish', 'Sesame']
 
 export default function SignupScreen() {
   const { user, loading } = useSession(false) // false = don't redirect automatically
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [dietary, setDietary] = useState<string[]>([])
+  const [allergen, setAllergen] = useState<string[]>([])
+  const [errors, setErrors] = useState<{[key:string]:string}>({})
 
   // Redirect logged-in users
   useEffect(() => {
@@ -64,6 +70,8 @@ export default function SignupScreen() {
         value={password}
         onChangeText={setPassword}
       />
+      <CheckboxGroup label="Dietary Restrictions" options={DIETARY_OPTIONS} selected={dietary} onChange={setDietary} error={errors.dietary} />
+      <CheckboxGroup label="Allergens" options={ALLERGEN_OPTIONS} selected={allergen} onChange={setAllergen} error={errors.allergen} />
 
       <TouchableOpacity style={styles.button} onPress={handleSignup} disabled={submitting}>
         <ThemedText style={styles.buttonText}>{submitting ? 'Signing up...' : 'Sign Up'}</ThemedText>

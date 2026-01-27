@@ -9,8 +9,8 @@ import { supabase } from '@/lib/supabase'
 import { CheckboxGroup } from '@/components/ui/checkbox-group'
 
 // ------------------- Options -------------------
-const DIETARY_OPTIONS = ['Halal','Kosher','Pescatarian','Vegetarian','Vegan']
-const ALLERGEN_OPTIONS = ['Dairy','Egg','Peanut','Tree nut','Soy','Wheat','Gluten','Shellfish','Fish','Sesame']
+const DIETARY_OPTIONS = ['None', 'Halal', 'Kosher', 'Pescatarian', 'Vegetarian', 'Vegan']
+const ALLERGEN_OPTIONS = ['None', 'Dairy', 'Egg', 'Peanut', 'Tree nut', 'Soy', 'Wheat', 'Gluten', 'Shellfish', 'Fish', 'Sesame']
 
 export default function CreateEventScreen() {
   const [caterer, setCaterer] = useState('')

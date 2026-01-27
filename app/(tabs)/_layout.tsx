@@ -2,7 +2,6 @@
 import React from 'react'
 import { Tabs } from 'expo-router'
 import { View, ActivityIndicator } from 'react-native'
-
 import { HapticTab } from '@/components/haptic-tab'
 import { IconSymbol } from '@/components/ui/icon-symbol'
 import { Colors } from '@/constants/theme'
