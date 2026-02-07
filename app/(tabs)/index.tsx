@@ -5,6 +5,7 @@ import ParallaxScrollView from '@/components/parallax-scroll-view'
 import { ThemedText } from '@/components/themed-text'
 import { ThemedView } from '@/components/themed-view'
 import { supabase } from '@/lib/supabase'
+import { Fonts } from '@/constants/theme'
 
 export default function HomeScreen() {
   const [events, setEvents] = useState<any[]>([])
@@ -33,7 +34,8 @@ export default function HomeScreen() {
       const { data, error } = await supabase
         .from('events')
         .select('*')
-        .eq('status', 0)
+        .neq('status', 0)
+        .neq('status', 3)
         .order('date', { ascending: true })
 
       if (error) {
@@ -50,9 +52,20 @@ export default function HomeScreen() {
 
   return (
     <ParallaxScrollView headerBackgroundColor={{ light: '#AE2222', dark: '#003d7c' }} headerImage={<Image />}>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Nearby Events</ThemedText>
-        <ScrollView showsVerticalScrollIndicator={false}>
+      <ThemedView style={styles.titleContainer}>
+        <ThemedText type="title" style={{ fontFamily: Fonts.rounded }}>Nearby Events</ThemedText>
+      </ThemedView>
+      <ThemedView style={styles.sectionContainer}>
+        <ThemedView style={styles.tableHeader}>
+          <ThemedText style={styles.tableHeaderText}>Caterer</ThemedText>
+          <ThemedText style={styles.tableHeaderText}>SFA</ThemedText>
+          <ThemedText style={styles.tableHeaderText}>Date</ThemedText>
+          <ThemedText style={styles.tableHeaderText}>Location</ThemedText>
+          <ThemedText style={styles.tableHeaderText}>Status</ThemedText>
+          <ThemedText style={styles.tableHeaderText}>Actions</ThemedText>
+        </ThemedView>
+      </ThemedView>
+      <ScrollView showsVerticalScrollIndicator={false}>
           {loading ? (
             <ThemedText>Loading nearby events...</ThemedText>
           ) : events.length === 0 ? (
@@ -69,13 +82,16 @@ export default function HomeScreen() {
               </TouchableOpacity>
             ))
           )}
-        </ScrollView>
-      </ThemedView>
+      </ScrollView>
     </ParallaxScrollView>
   )
 }
 
 const styles = StyleSheet.create({
-  stepContainer: { gap: 8, marginBottom: 8 },
+  titleContainer: { flexDirection:'row', justifyContent:'space-between', alignItems:'center' },
+  sectionContainer: { marginTop:20, padding:14, borderRadius:12, backgroundColor:'rgba(0,0,0,0.03)' },
+  sectionHeader: { flexDirection:'row', justifyContent:'space-between', alignItems:'center', padding:8, marginBottom:10 },
+  tableHeader: { flexDirection:'row', justifyContent:'space-between', paddingVertical:8, paddingHorizontal:8 },
+  tableHeaderText: { fontWeight:'600', opacity:0.7 },
   eventCard: { padding: 12, borderRadius: 12, marginBottom: 10, backgroundColor: '#ef7c00' },
 })

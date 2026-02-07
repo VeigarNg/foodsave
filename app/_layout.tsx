@@ -21,9 +21,9 @@ function RootNavigator() {
   return (
     <Stack>
       {user ? (
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ title: "Blank", headerShown: false }} />
       ) : (
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" options={{ title: "Login", headerShown: true }} />
       )}
     </Stack>
   )
